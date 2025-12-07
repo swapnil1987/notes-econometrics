@@ -1,0 +1,77 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "Doctoral Econometrics: Theory and Computation"
+  author: "Your Name"
+  date: today
+  chapters:
+    - index.qmd
+    - part: "Part I: Mathematical Foundations"
+      chapters:
+        - chapters/01-linear-algebra.qmd
+        - chapters/02-probability-theory.qmd
+        - chapters/03-statistical-inference.qmd
+    - part: "Part II: Classical Econometrics"
+      chapters:
+        - chapters/04-ols-theory.qmd
+        - chapters/05-hypothesis-testing.qmd
+        - chapters/06-asymptotics.qmd
+    - part: "Part III: Advanced Topics"
+      chapters:
+        - chapters/07-gmm.qmd
+        - chapters/08-time-series.qmd
+        - chapters/09-panel-data.qmd
+    - references.qmd
+  
+  repo-url: https://github.com/yourusername/econometrics-book
+  repo-actions: [edit, issue]
+  
+  sidebar:
+    style: floating
+    search: true
+    collapse-level: 1
+  
+  page-footer:
+    left: |
+      © 2024 Your Name. Licensed under CC BY-NC-SA 4.0
+    right: |
+      Built with [Quarto](https://quarto.org/)
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: 
+      light: [cosmo, custom.scss]
+      dark: [cosmo, custom-dark.scss]
+    code-copy: true
+    code-fold: false
+    code-tools: true
+    code-link: true
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    number-depth: 3
+    fig-width: 8
+    fig-height: 6
+    fig-dpi: 300
+    highlight-style: github
+    html-math-method: mathjax
+    include-in-header:
+      - text: |
+          <script>
+          MathJax = {
+            tex: {
+              tags: 'ams'
+            }
+          };
+          </script>
+
+execute:
+  freeze: auto
+  cache: true
+  echo: true
+  warning: true
+  error: false

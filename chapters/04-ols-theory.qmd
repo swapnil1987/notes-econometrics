@@ -1,0 +1,178 @@
+# OLS Theory and Practice {#sec-ols}
+
+## The Linear Regression Model
+
+Consider the linear regression model:
+
+$$
+y_i = \mathbf{x}_i'\boldsymbol{\beta} + \epsilon_i, \quad i = 1, \ldots, n
+$$ {#eq-linear-model}
+
+where $y_i$ is the dependent variable, $\mathbf{x}_i$ is a $k \times 1$ vector of regressors, $\boldsymbol{\beta}$ is the parameter vector, and $\epsilon_i$ is the error term.
+
+In matrix notation:
+
+$$
+\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}
+$$ {#eq-matrix-form}
+
+## Classical Assumptions
+
+::: {.callout-important}
+## Gauss-Markov Assumptions
+
+1. **Linearity**: The model is linear in parameters
+2. **Strict exogeneity**: $\mathbb{E}[\epsilon_i | \mathbf{X}] = 0$
+3. **No multicollinearity**: $\text{rank}(\mathbf{X}) = k$
+4. **Homoskedasticity**: $\text{Var}(\epsilon_i | \mathbf{X}) = \sigma^2$
+5. **No autocorrelation**: $\text{Cov}(\epsilon_i, \epsilon_j | \mathbf{X}) = 0$ for $i \neq j$
+:::
+
+## OLS Estimator
+
+### Derivation
+
+The OLS estimator minimizes the sum of squared residuals:
+
+$$
+\hat{\boldsymbol{\beta}} = \arg\min_{\boldsymbol{\beta}} (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})'(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})
+$$
+
+Taking the first-order condition:
+
+$$
+\frac{\partial}{\partial \boldsymbol{\beta}} (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})'(\mathbf{y} - \mathbf{X}\boldsymbol{\beta}) = -2\mathbf{X}'(\mathbf{y} - \mathbf{X}\boldsymbol{\beta}) = 0
+$$
+
+This yields the **normal equations**:
+
+$$
+\mathbf{X}'\mathbf{X}\hat{\boldsymbol{\beta}} = \mathbf{X}'\mathbf{y}
+$$
+
+And the solution:
+
+$$
+\hat{\boldsymbol{\beta}} = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}
+$$ {#eq-ols-estimator}
+
+### Implementation
+
+```{python}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy import stats
+
+# Set random seed for reproducibility
+np.random.seed(42)
+
+# Generate data
+n = 100
+k = 3
+
+# Design matrix (including constant)
+X = np.column_stack([
+    np.ones(n),
+    np.random.randn(n),
+    np.random.randn(n)
+])
+
+# True parameters
+beta_true = np.array([1.5, 2.0, -1.5])
+
+# Generate dependent variable
+epsilon = np.random.randn(n)
+y = X @ beta_true + epsilon
+
+# OLS estimation
+beta_hat = np.linalg.inv(X.T @ X) @ X.T @ y
+
+print("True parameters:", beta_true)
+print("OLS estimates:  ", beta_hat)
+print("Estimation error:", beta_hat - beta_true)
+```
+
+## Properties of OLS
+
+::: {.callout-note}
+## Theorem: Gauss-Markov Theorem
+
+Under assumptions 1-5, the OLS estimator is BLUE (Best Linear Unbiased Estimator):
+
+1. **Unbiased**: $\mathbb{E}[\hat{\boldsymbol{\beta}} | \mathbf{X}] = \boldsymbol{\beta}$
+2. **Efficient**: Among all linear unbiased estimators, OLS has the smallest variance
+:::
+
+### Proof of Unbiasedness
+
+```{python}
+#| code-fold: true
+#| code-summary: "Show simulation"
+
+# Simulation to verify unbiasedness
+n_simulations = 10000
+n, k = 50, 2
+
+# Storage for estimates
+beta_estimates = np.zeros((n_simulations, k))
+
+# True parameters
+beta_true = np.array([1.0, 2.0])
+
+for i in range(n_simulations):
+    # Generate data
+    X = np.column_stack([np.ones(n), np.random.randn(n)])
+    epsilon = np.random.randn(n)
+    y = X @ beta_true + epsilon
+    
+    # OLS
+    beta_hat = np.linalg.inv(X.T @ X) @ X.T @ y
+    beta_estimates[i, :] = beta_hat
+
+# Check unbiasedness
+print("True β:", beta_true)
+print("Mean of β̂:", beta_estimates.mean(axis=0))
+print("Bias:", beta_estimates.mean(axis=0) - beta_true)
+```
+
+### Sampling Distribution
+
+```{python}
+#| label: fig-sampling-dist
+#| fig-cap: "Sampling distribution of OLS estimator"
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+
+for j in range(k):
+    axes[j].hist(beta_estimates[:, j], bins=50, density=True, 
+                 alpha=0.7, edgecolor='black')
+    axes[j].axvline(beta_true[j], color='red', linestyle='--', 
+                    linewidth=2, label='True value')
+    axes[j].axvline(beta_estimates[:, j].mean(), color='blue', 
+                    linestyle='--', linewidth=2, label='Mean of estimates')
+    axes[j].set_xlabel(f'β̂_{j}')
+    axes[j].set_ylabel('Density')
+    axes[j].set_title(f'Distribution of β̂_{j}')
+    axes[j].legend()
+    axes[j].grid(alpha=0.3)
+
+plt.tight_layout()
+plt.show()
+```
+
+## Exercises
+
+::: {.callout-tip}
+## Theoretical Exercises
+
+1. Prove that $\mathbb{E}[\hat{\boldsymbol{\beta}} | \mathbf{X}] = \boldsymbol{\beta}$ under the Gauss-Markov assumptions.
+
+2. Derive the variance formula for OLS.
+
+## Computational Exercises
+
+3. Generate data with heteroskedastic errors and compare standard errors
+4. Implement robust standard error estimation
+:::

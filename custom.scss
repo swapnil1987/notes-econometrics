@@ -1,0 +1,50 @@
+/*-- scss:defaults --*/
+$body-color: #333;
+$link-color: #2780e3;
+
+/*-- scss:rules --*/
+
+// Callout boxes
+.callout {
+  border-left: 4px solid;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.callout-note {
+  border-left-color: #2780e3;
+  background-color: #f0f7ff;
+}
+
+.callout-important {
+  border-left-color: #e63946;
+  background-color: #fff5f5;
+}
+
+.callout-tip {
+  border-left-color: #06a77d;
+  background-color: #f0fdf4;
+}
+
+// Code blocks
+pre.sourceCode {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  padding: 1rem;
+}
+
+// Math equations
+.math {
+  font-size: 1.1em;
+}
+
+// Theorem environments
+.theorem {
+  font-style: italic;
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+  background-color: #f8f9fa;
+  border-left: 3px solid #6c757d;
+}

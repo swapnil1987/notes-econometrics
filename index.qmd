@@ -1,0 +1,57 @@
+# Preface {.unnumbered}
+
+Welcome to **Doctoral Econometrics: Theory and Computation**, a comprehensive course designed for PhD students in economics and related fields.
+
+## About This Book
+
+This book provides a rigorous treatment of econometric theory while emphasizing computational implementation. Each chapter combines:
+
+- **Mathematical foundations**: Theorems, proofs, and derivations
+- **Computational implementation**: Python code with NumPy, SciPy, and statsmodels
+- **Applied examples**: Real economic data and empirical applications
+- **Exercises**: Both theoretical problems and coding assignments
+
+## Prerequisites
+
+Students should have:
+
+- Strong background in calculus and linear algebra
+- Basic probability and statistics
+- Programming experience (Python preferred, but not required)
+- Familiarity with economic theory
+
+## Course Philosophy
+
+Modern econometrics requires both deep theoretical understanding and computational proficiency. This course bridges the gap between abstract mathematical results and their practical implementation, preparing you for empirical research.
+
+## Software Setup
+
+All code examples use Python with the following main packages:
+
+```python
+import numpy as np
+import scipy as sp
+import pandas as pd
+import matplotlib.pyplot as plt
+import statsmodels.api as sm
+```
+
+See the installation guide for setting up your environment.
+
+## How to Use This Book
+
+- **Interactive code**: All code blocks are executable. Click the "Code" button to show/hide code.
+- **Exercises**: Each chapter ends with theoretical and computational exercises
+- **Online resources**: Datasets and additional materials available on GitHub
+
+## Acknowledgments
+
+This book has benefited from feedback by students and colleagues. All remaining errors are my own.
+
+## License
+
+This work is licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+---
+
+**Last updated**: `r Sys.Date()`

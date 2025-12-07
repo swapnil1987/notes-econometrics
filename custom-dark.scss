@@ -1,0 +1,23 @@
+/*-- scss:defaults --*/
+$body-bg: #1e1e1e;
+$body-color: #e0e0e0;
+$link-color: #58a6ff;
+
+/*-- scss:rules --*/
+
+.callout-note {
+  background-color: #1c2c3f;
+}
+
+.callout-important {
+  background-color: #3f1c1c;
+}
+
+.callout-tip {
+  background-color: #1c3f2c;
+}
+
+pre.sourceCode {
+  background-color: #2d2d2d;
+  border-color: #404040;
+}
